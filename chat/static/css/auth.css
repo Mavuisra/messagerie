@@ -1,0 +1,249 @@
+.form-control {
+    background-color: var(--telegram-secondary);
+    border: 1px solid var(--telegram-accent);
+    color: var(--telegram-text);
+}
+
+.form-control:focus {
+    background-color: var(--telegram-secondary);
+    border-color: var(--telegram-accent);
+    color: var(--telegram-text);
+    box-shadow: 0 0 0 0.25rem rgba(43, 82, 120, 0.25);
+}
+
+.card {
+    border: 1px solid var(--telegram-accent);
+    background-color: var(--card-bg) !important;
+}
+
+.alert {
+    background-color: var(--telegram-secondary);
+    border-color: var(--telegram-accent);
+    color: var(--telegram-text);
+}
+
+a {
+    color: var(--telegram-accent);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--telegram-accent);
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.chat-list {
+    overflow-y: auto;
+}
+
+.user-list-item {
+    transition: background-color 0.2s;
+}
+
+.user-list-item:hover {
+    background-color: var(--telegram-accent);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Styles spécifiques au thème */
+[data-theme="light"] .text-muted {
+    color: #666666 !important;
+}
+
+[data-theme="light"] .bg-dark {
+    background-color: var(--navbar-bg) !important;
+}
+
+[data-theme="light"] .navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Ajoutez ces styles à la fin du fichier */
+
+/* Styles pour la salle de chat */
+.chat-user-info {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--telegram-secondary);
+    margin-bottom: 15px;
+}
+
+.messages-container {
+    height: calc(100vh - 180px);
+    overflow-y: auto;
+    background-color: var(--telegram-bg);
+    padding: 20px;
+}
+
+.messages-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message-wrapper {
+    display: flex;
+    margin: 5px 0;
+}
+
+.message-wrapper.sent {
+    justify-content: flex-end;
+}
+
+.message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.message-wrapper.sent .message {
+    background-color: var(--telegram-accent);
+    border-bottom-right-radius: 5px;
+}
+
+.message-wrapper.received .message {
+    background-color: var(--telegram-secondary);
+    border-bottom-left-radius: 5px;
+}
+
+.message-sender {
+    font-size: 0.8em;
+    color: var(--telegram-accent);
+    margin-bottom: 4px;
+}
+
+.message-content {
+    word-wrap: break-word;
+}
+
+.message-time {
+    font-size: 0.7em;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: right;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+.message-status {
+    font-size: 0.8em;
+    color: #8ab4f8;
+}
+
+.message-file {
+    margin-top: 8px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.file-link {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-input-container {
+    padding: 20px;
+    background-color: var(--telegram-secondary);
+    border-top: 1px solid var(--telegram-accent);
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--telegram-bg);
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.message-input {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 8px;
+    color: var(--telegram-text);
+    font-size: 1em;
+}
+
+.message-input:focus {
+    outline: none;
+}
+
+.btn-attachment,
+.btn-send {
+    background: none;
+    border: none;
+    color: var(--telegram-accent);
+    padding: 8px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.btn-attachment:hover,
+.btn-send:hover {
+    color: var(--telegram-text);
+}
+
+/* Scrollbar personnalisée */
+.messages-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+    background: var(--telegram-bg);
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+    background: var(--telegram-accent);
+    border-radius: 3px;
+}
+
+/* Animation des messages */
+.message {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .chat-list {
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        display: none;
+    }
+    
+    .chat-messages {
+        width: 100%;
+    }
+    
+    .message {
+        max-width: 85%;
+    }
+}

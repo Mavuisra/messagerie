@@ -1,0 +1,75 @@
+{% extends 'chat/base.html' %}
+{% load chat_extras %}
+
+{% block content %}
+<div class="flex h-[calc(100vh-4rem)]">
+    <!-- Liste des utilisateurs -->
+    <div class="w-full max-w-md mx-auto p-6 bg-white dark:bg-background-dark">
+        <h2 class="text-2xl font-bold mb-6 dark:text-white">Conversations</h2>
+        
+        <!-- Liste des utilisateurs -->
+        <div class="space-y-3">
+            {% for user in available_users %}
+            <a href="{% url 'chat:start_chat' user.id %}" 
+               class="block p-4 rounded-lg hover:bg-secondary-light dark:hover:bg-secondary-dark transition-colors duration-200">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <!-- Avatar -->
+                        <div class="w-12 h-12 rounded-full bg-primary-light dark:bg-primary-dark flex items-center justify-center text-white font-bold text-lg">
+                            {{ user.username|first|upper }}
+                        </div>
+                        
+                        <!-- Infos utilisateur -->
+                        <div>
+                            <h3 class="font-semibold dark:text-white">{{ user.username }}</h3>
+                            {% with unread_count=user|unread_messages:request.user %}
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                {% if user.userprofile.last_seen %}
+                                    Vu {{ user.userprofile.last_seen|timesince }}
+                                {% endif %}
+                            </p>
+                            {% endwith %}
+                        </div>
+                    </div>
+                    
+                    <!-- Badge messages non lus -->
+                    {% with unread_count=user|unread_messages:request.user %}
+                    {% if unread_count > 0 %}
+                    <div class="flex items-center">
+                        <span class="bg-primary-light dark:bg-primary-dark text-white px-2 py-1 rounded-full text-xs">
+                            {{ unread_count }}
+                        </span>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                
+                <!-- Dernier message -->
+                {% with last_message=user|last_message:request.user %}
+                {% if last_message %}
+                <div class="mt-2 text-sm text-gray-500 dark:text-gray-400 flex items-center space-x-2">
+                    {% if last_message.sender == request.user %}
+                    <i class="fas fa-check-double {% if last_message.is_read %}text-blue-500{% endif %}"></i>
+                    {% endif %}
+                    <span>{{ last_message.content|truncatechars:50 }}</span>
+                </div>
+                {% endif %}
+                {% endwith %}
+            </a>
+            {% empty %}
+            <div class="text-center py-8">
+                <div class="text-gray-400 dark:text-gray-500 mb-4">
+                    <i class="fas fa-users text-6xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                    Aucun utilisateur disponible
+                </h3>
+                <p class="text-gray-500 dark:text-gray-400">
+                    Revenez plus tard pour discuter avec d'autres utilisateurs
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

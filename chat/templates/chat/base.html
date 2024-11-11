@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIA Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#3390ec',
+                            dark: '#2b5278'
+                        },
+                        secondary: {
+                            light: '#f0f2f5',
+                            dark: '#242f3d'
+                        },
+                        background: {
+                            light: '#ffffff',
+                            dark: '#17212b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="dark:bg-background-dark bg-background-light dark:text-white text-gray-800 transition-colors duration-200">
+    <nav class="border-b dark:border-primary-dark border-primary-light dark:bg-secondary-dark bg-secondary-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{% url 'chat:chat_list' %}" class="text-2xl font-bold">AIA CHAT</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-500">
+                            <span class="theme-icon text-xl">🌙</span>
+                        </button>
+                        <span class="font-medium">{{ user.username }}</span>
+                        <a href="{% url 'chat:logout' %}" class="hover:text-primary-light dark:hover:text-primary-dark">Déconnexion</a>
+                    {% else %}
+                        <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-500">
+                            <span class="theme-icon text-xl">🌙</span>
+                        </button>
+                        <a href="{% url 'chat:login' %}" class="hover:text-primary-light dark:hover:text-primary-dark">Connexion</a>
+                        <a href="{% url 'chat:register' %}" class="hover:text-primary-light dark:hover:text-primary-dark">Inscription</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+    {% block content %}
+    {% endblock %}
+    
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.querySelector('.theme-icon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const themeIcon = document.querySelector('.theme-icon');
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeIcon.textContent = '🌙';
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+    </script>
+</body>
+</html> 
